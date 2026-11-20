@@ -1,0 +1,1147 @@
+{
+  "name": "Digi-Key → Airtable (חד-פעמי)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "dkClientId",
+            "value": ""
+          },
+          {
+            "name": "dkClientSecret",
+            "value": ""
+          },
+          {
+            "name": "queries",
+            "value": "resistor\ncapacitor\nmicrocontroller\nconnector\ntemperature sensor\npower supply module\nrelay\nLED"
+          },
+          {
+            "name": "perQuery",
+            "value": "3"
+          },
+          {
+            "name": "existingItems",
+            "value": ";ATTINY10-TS8RTR-ND=rec02QKSFwhyNRL6H;ATTINY4-TSHRTR-ND=rec0oaj7F1yaHGB6w;541-10.0KLTR-ND=rec7TjoSejtx4VS2p;P0.0JTR-ND=recFPrB8mMsuqJ8HV;ATTINY10-TSHRTR-ND=recJnNDcMI7dnA1fl;490-18149-2-ND=recLDXuem0x9ckyfe;1589-1958-2-ND=recN6QajBj73BlwxU;490-NCU15XH103F6SRCTR-ND=recPdWWevPFUpX622;311-3.30KHRTR-ND=recPsaMaUdIu8MNsr;2057-PH1-03-UA-ND=recRYpPUHQsUzgL1c;2449-CS1213AGF260TR-ND=recSz5LTOtNFP7YYX;455-1318TR-ND=recU66jIscmpvnVRF;SZNUD3124LT1GOSTR-ND=recVpHSY5zKnc8tQd;587-1231-2-ND=recWzZb1cGbkUMFen;455-1130TR-ND=recZNRok1W0joGTvB;490-14514-2-ND=recaASeyEHgYzQR2n;1589-1987-2-ND=recgbqeOy9MD4ulJr;2138-JB2835BWT-G-U40GA0000-N0000001TR-ND=recpjJGVDUuGN4juW;490-6328-2-ND=recqxQ534moSYl0JN;445-2550-2-ND=recsS0NvV5o6uPXcK;SZNUD3124DMT1GOSTR-ND=rectny9MVZK89Fegb;160-LTST-C190GKTTR-ND=recujCt14ufw1BBlI;1589-1988-2-ND=recvPsAIVGPkn5Wh6;455-1042TR-ND=recwZz8AWXBwhD93Q;"
+          },
+          {
+            "name": "existingSuppliers",
+            "value": ";MFR-ONSEMI=rec00xyMFVuZccrSL;MFR-MICROCHIP-TECHNOLOGY=rec0dy0Em4sxsSqnN;MFR-TAIYO-YUDEN=rec4IYt7PhgVrZXcz;MFR-VISHAY-DALE=rec5xWpG6mrrntZI3;MFR-LITE-ON-INC=recIo2vGJGHMl4wMt;MFR-ADAM-TECH=recTelSp3hUwbgvG8;MFR-YAGEO=recW3lBU7o0DVdntJ;MFR-CIT-RELAY-AND-SWITCH=recWpxBbsaA9mkATF;MFR-TDK=recZ7cpyoFLoDUH2h;MFR-MONOLITHIC-POWER-SYSTEMS=recZUeXBl1mwbVvhj;MFR-CREE-LED=rechuZWmEyKbTk8Gi;MFR-JST-SALES-AMERICA-INC=recnadZIEKvcSCr8h;MFR-PANASONIC-INDUSTRY=recvh31dFSowLttqY;MFR-MURATA-ELECTRONICS=recwMzZBOEGEI6Ubn;"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:MakeRequest",
+      "version": 4,
+      "parameters": {
+        "authenticationType": "noAuth",
+        "tlsType": ""
+      },
+      "mapper": {
+        "url": "https://api.digikey.com/v1/oauth2/token",
+        "method": "post",
+        "contentType": "urlEncoded",
+        "urlEncodedBodyContent": [
+          {
+            "name": "client_id",
+            "value": "{{1.dkClientId}}"
+          },
+          {
+            "name": "client_secret",
+            "value": "{{1.dkClientSecret}}"
+          },
+          {
+            "name": "grant_type",
+            "value": "client_credentials"
+          }
+        ],
+        "parseResponse": true,
+        "stopOnHttpError": true,
+        "timeout": "40",
+        "allowRedirects": true,
+        "shareCookies": false,
+        "requestCompressedContent": true
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "onerror": [
+        {
+          "id": 100,
+          "module": "airtable:upsertRecord",
+          "version": 3,
+          "parameters": {
+            "__IMTCONN__": 13251249
+          },
+          "mapper": {
+            "base": "appHZ3j17mjTXiMP6",
+            "table": "tblGmahWYWceghxkR",
+            "recordId": "recR3bSK4YzYAhDoC",
+            "record": {
+              "fldKN6W4BlP6dUiJn": "failed"
+            },
+            "typecast": false,
+            "useColumnId": false
+          },
+          "metadata": {
+            "designer": {
+              "x": 600,
+              "y": 300
+            }
+          }
+        },
+        {
+          "id": 101,
+          "module": "airtable:upsertRecord",
+          "version": 3,
+          "parameters": {
+            "__IMTCONN__": 13251249
+          },
+          "mapper": {
+            "base": "appHZ3j17mjTXiMP6",
+            "table": "tblGmahWYWceghxkR",
+            "recordId": "recNxn6uHmIcwx5z7",
+            "record": {
+              "fldKN6W4BlP6dUiJn": "קבלת טוקן מ-Digi-Key נכשלה. בדקו את Client ID ו-Client Secret במודול 1. הנתונים לא עודכנו."
+            },
+            "typecast": false,
+            "useColumnId": false
+          },
+          "metadata": {
+            "designer": {
+              "x": 900,
+              "y": 300
+            }
+          }
+        },
+        {
+          "id": 102,
+          "module": "airtable:upsertRecord",
+          "version": 3,
+          "parameters": {
+            "__IMTCONN__": 13251249
+          },
+          "mapper": {
+            "base": "appHZ3j17mjTXiMP6",
+            "table": "tblGmahWYWceghxkR",
+            "recordId": "reci3muHrMjEe70aB",
+            "record": {
+              "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+            },
+            "typecast": false,
+            "useColumnId": false
+          },
+          "metadata": {
+            "designer": {
+              "x": 1200,
+              "y": 300
+            }
+          }
+        },
+        {
+          "id": 103,
+          "module": "builtin:Commit",
+          "version": 1,
+          "parameters": {},
+          "mapper": null,
+          "metadata": {
+            "designer": {
+              "x": 1500,
+              "y": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{split(1.queries; newline)}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "http:MakeRequest",
+      "version": 4,
+      "parameters": {
+        "authenticationType": "noAuth",
+        "tlsType": ""
+      },
+      "mapper": {
+        "url": "https://api.digikey.com/products/v4/search/keyword",
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{2.data.access_token}}"
+          },
+          {
+            "name": "X-DIGIKEY-Client-Id",
+            "value": "{{1.dkClientId}}"
+          },
+          {
+            "name": "X-DIGIKEY-Locale-Site",
+            "value": "US"
+          },
+          {
+            "name": "X-DIGIKEY-Locale-Currency",
+            "value": "USD"
+          }
+        ],
+        "contentType": "json",
+        "inputMethod": "jsonString",
+        "jsonStringBodyContent": "{\"Keywords\": \"{{3.value}}\", \"Limit\": 10, \"Offset\": 0}",
+        "parseResponse": true,
+        "stopOnHttpError": true,
+        "timeout": "40",
+        "allowRedirects": true,
+        "shareCookies": false,
+        "requestCompressedContent": true
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "onerror": [
+        {
+          "id": 104,
+          "module": "airtable:upsertRecord",
+          "version": 3,
+          "parameters": {
+            "__IMTCONN__": 13251249
+          },
+          "mapper": {
+            "base": "appHZ3j17mjTXiMP6",
+            "table": "tblGmahWYWceghxkR",
+            "recordId": "recR3bSK4YzYAhDoC",
+            "record": {
+              "fldKN6W4BlP6dUiJn": "failed"
+            },
+            "typecast": false,
+            "useColumnId": false
+          },
+          "metadata": {
+            "designer": {
+              "x": 1200,
+              "y": 300
+            }
+          }
+        },
+        {
+          "id": 105,
+          "module": "airtable:upsertRecord",
+          "version": 3,
+          "parameters": {
+            "__IMTCONN__": 13251249
+          },
+          "mapper": {
+            "base": "appHZ3j17mjTXiMP6",
+            "table": "tblGmahWYWceghxkR",
+            "recordId": "recNxn6uHmIcwx5z7",
+            "record": {
+              "fldKN6W4BlP6dUiJn": "חיפוש \"{{3.value}}\" ב-Digi-Key נכשל. הנתונים לא עודכנו."
+            },
+            "typecast": false,
+            "useColumnId": false
+          },
+          "metadata": {
+            "designer": {
+              "x": 1500,
+              "y": 300
+            }
+          }
+        },
+        {
+          "id": 106,
+          "module": "airtable:upsertRecord",
+          "version": 3,
+          "parameters": {
+            "__IMTCONN__": 13251249
+          },
+          "mapper": {
+            "base": "appHZ3j17mjTXiMP6",
+            "table": "tblGmahWYWceghxkR",
+            "recordId": "reci3muHrMjEe70aB",
+            "record": {
+              "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+            },
+            "typecast": false,
+            "useColumnId": false
+          },
+          "metadata": {
+            "designer": {
+              "x": 1800,
+              "y": 300
+            }
+          }
+        },
+        {
+          "id": 107,
+          "module": "builtin:Commit",
+          "version": 1,
+          "parameters": {},
+          "mapper": null,
+          "metadata": {
+            "designer": {
+              "x": 2100,
+              "y": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{4.data.Products}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "filter": {
+        "name": "פריט תקין",
+        "conditions": [
+          [
+            {
+              "a": "{{ifempty(first(map(5.ProductVariations; \"DigiKeyProductNumber\")); 5.DigiKeyProductNumber)}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{ifempty(5.UnitPrice; first(map(first(map(5.ProductVariations; \"StandardPricing\")); \"UnitPrice\")))}}",
+              "o": "number:greater",
+              "b": "0"
+            },
+            {
+              "a": "{{5.QuantityAvailable}}",
+              "o": "number:greater",
+              "b": "0"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "variables": [
+          {
+            "name": "sku",
+            "value": "{{ifempty(first(map(5.ProductVariations; \"DigiKeyProductNumber\")); 5.DigiKeyProductNumber)}}"
+          },
+          {
+            "name": "unitCost",
+            "value": "{{round(ifempty(5.UnitPrice; first(map(first(map(5.ProductVariations; \"StandardPricing\")); \"UnitPrice\"))) * 100) / 100}}"
+          },
+          {
+            "name": "name",
+            "value": "{{substring(join(add(emptyarray; 5.ManufacturerProductNumber; ifempty(5.Description.ProductDescription; 5.Description.DetailedDescription)); \" - \"); 0; 90)}}"
+          },
+          {
+            "name": "category",
+            "value": "{{ifempty(5.Category.Name; 3.value)}}"
+          },
+          {
+            "name": "mfr",
+            "value": "{{ifempty(5.Manufacturer.Name; \"Unknown\")}}"
+          },
+          {
+            "name": "supplierId",
+            "value": "MFR-{{ifempty(substring(replace(replace(replace(upper(ifempty(5.Manufacturer.Name; \"Unknown\")); /[^A-Z0-9]+/g; \"-\"); /^-+/; emptystring); /-+$/; emptystring); 0; 24); \"UNKNOWN\")}}"
+          },
+          {
+            "name": "leadDays",
+            "value": "{{if(parseNumber(5.ManufacturerLeadWeeks; \".\") > 0; min(parseNumber(5.ManufacturerLeadWeeks; \".\") * 7; 120); 14)}}"
+          },
+          {
+            "name": "skuKey",
+            "value": ";{{ifempty(first(map(5.ProductVariations; \"DigiKeyProductNumber\")); 5.DigiKeyProductNumber)}}="
+          },
+          {
+            "name": "supKey",
+            "value": ";MFR-{{ifempty(substring(replace(replace(replace(upper(ifempty(5.Manufacturer.Name; \"Unknown\")); /[^A-Z0-9]+/g; \"-\"); /^-+/; emptystring); /-+$/; emptystring); 0; 24); \"UNKNOWN\")}}="
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "parameters": {
+        "feeder": 5
+      },
+      "mapper": {
+        "sku": "{{6.sku}}",
+        "unitCost": "{{6.unitCost}}",
+        "name": "{{6.name}}",
+        "category": "{{6.category}}",
+        "mfr": "{{6.mfr}}",
+        "supplierId": "{{6.supplierId}}",
+        "leadDays": "{{6.leadDays}}",
+        "skuKey": "{{6.skuKey}}",
+        "supKey": "{{6.supKey}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 9,
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "parameters": {
+        "feeder": 3
+      },
+      "mapper": {
+        "picks": "{{slice(7.array; 0; 1.perQuery)}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 2100,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 10,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "parts",
+            "value": "{{flatten(map(9.array; \"picks\"))}}"
+          },
+          {
+            "name": "skus",
+            "value": "{{deduplicate(map(flatten(map(9.array; \"picks\")); \"sku\"))}}"
+          },
+          {
+            "name": "supplierIds",
+            "value": "{{deduplicate(map(flatten(map(9.array; \"picks\")); \"supplierId\"))}}"
+          },
+          {
+            "name": "count",
+            "value": "{{length(deduplicate(map(flatten(map(9.array; \"picks\")); \"sku\")))}}"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 2400,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 11,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 2700,
+          "y": 0
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 20,
+              "module": "airtable:upsertRecord",
+              "version": 3,
+              "parameters": {
+                "__IMTCONN__": 13251249
+              },
+              "mapper": {
+                "base": "appHZ3j17mjTXiMP6",
+                "table": "tblGmahWYWceghxkR",
+                "recordId": "recR3bSK4YzYAhDoC",
+                "record": {
+                  "fldKN6W4BlP6dUiJn": "failed"
+                },
+                "typecast": false,
+                "useColumnId": false
+              },
+              "metadata": {
+                "designer": {
+                  "x": 2700,
+                  "y": -300
+                }
+              },
+              "filter": {
+                "name": "פחות מ-8 פריטים",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{10.count}}",
+                      "o": "number:less",
+                      "b": "8"
+                    }
+                  ]
+                ]
+              }
+            },
+            {
+              "id": 21,
+              "module": "airtable:upsertRecord",
+              "version": 3,
+              "parameters": {
+                "__IMTCONN__": 13251249
+              },
+              "mapper": {
+                "base": "appHZ3j17mjTXiMP6",
+                "table": "tblGmahWYWceghxkR",
+                "recordId": "recNxn6uHmIcwx5z7",
+                "record": {
+                  "fldKN6W4BlP6dUiJn": "Digi-Key החזיר רק {{10.count}} פריטים תקינים (נדרשים לפחות 8). הנתונים לא עודכנו."
+                },
+                "typecast": false,
+                "useColumnId": false
+              },
+              "metadata": {
+                "designer": {
+                  "x": 3000,
+                  "y": -300
+                }
+              }
+            },
+            {
+              "id": 22,
+              "module": "airtable:upsertRecord",
+              "version": 3,
+              "parameters": {
+                "__IMTCONN__": 13251249
+              },
+              "mapper": {
+                "base": "appHZ3j17mjTXiMP6",
+                "table": "tblGmahWYWceghxkR",
+                "recordId": "reci3muHrMjEe70aB",
+                "record": {
+                  "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+                },
+                "typecast": false,
+                "useColumnId": false
+              },
+              "metadata": {
+                "designer": {
+                  "x": 3300,
+                  "y": -300
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 30,
+              "module": "builtin:BasicRouter",
+              "version": 1,
+              "parameters": {},
+              "mapper": null,
+              "filter": {
+                "name": "לפחות 8 פריטים",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{10.count}}",
+                      "o": "number:greaterorequal",
+                      "b": "8"
+                    }
+                  ]
+                ]
+              },
+              "metadata": {
+                "designer": {
+                  "x": 3000,
+                  "y": 0
+                }
+              },
+              "routes": [
+                {
+                  "flow": [
+                    {
+                      "id": 31,
+                      "module": "builtin:BasicFeeder",
+                      "version": 1,
+                      "parameters": {},
+                      "mapper": {
+                        "array": "{{10.supplierIds}}"
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3600,
+                          "y": 0
+                        }
+                      }
+                    },
+                    {
+                      "id": 32,
+                      "module": "airtable:upsertRecord",
+                      "version": 3,
+                      "parameters": {
+                        "__IMTCONN__": 13251249
+                      },
+                      "mapper": {
+                        "base": "appHZ3j17mjTXiMP6",
+                        "table": "tblS1CxeV6YLxu593",
+                        "recordId": "{{if(contains(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))); substring(1.existingSuppliers; indexOf(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + length(first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))); indexOf(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + length(first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + 17); emptystring)}}",
+                        "record": {
+                          "fldSjUsOiffy4CjTz": "{{31.value}}",
+                          "fld9cmjzEsEWAb5TU": "{{first(map(10.parts; \"mfr\"; \"supplierId\"; 31.value))}}",
+                          "fldt6WO11hjftITjY": "{{first(map(10.parts; \"leadDays\"; \"supplierId\"; 31.value))}}"
+                        },
+                        "typecast": false,
+                        "useColumnId": false
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3900,
+                          "y": 0
+                        }
+                      },
+                      "onerror": [
+                        {
+                          "id": 108,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "recR3bSK4YzYAhDoC",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "failed"
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4200,
+                              "y": 150
+                            }
+                          }
+                        },
+                        {
+                          "id": 109,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "recNxn6uHmIcwx5z7",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "כתיבת ספקים ל-Airtable נכשלה. ייתכן עדכון חלקי."
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4500,
+                              "y": 150
+                            }
+                          }
+                        },
+                        {
+                          "id": 110,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "reci3muHrMjEe70aB",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4800,
+                              "y": 150
+                            }
+                          }
+                        },
+                        {
+                          "id": 111,
+                          "module": "builtin:Commit",
+                          "version": 1,
+                          "parameters": {},
+                          "mapper": null,
+                          "metadata": {
+                            "designer": {
+                              "x": 5100,
+                              "y": 150
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "flow": [
+                    {
+                      "id": 33,
+                      "module": "builtin:BasicFeeder",
+                      "version": 1,
+                      "parameters": {},
+                      "mapper": {
+                        "array": "{{10.skus}}"
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3600,
+                          "y": 300
+                        }
+                      }
+                    },
+                    {
+                      "id": 34,
+                      "module": "airtable:upsertRecord",
+                      "version": 3,
+                      "parameters": {
+                        "__IMTCONN__": 13251249
+                      },
+                      "mapper": {
+                        "base": "appHZ3j17mjTXiMP6",
+                        "table": "tblsmKND0GhKkRims",
+                        "recordId": "{{if(contains(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))); substring(1.existingItems; indexOf(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + length(first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))); indexOf(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + length(first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + 17); emptystring)}}",
+                        "record": {
+                          "fld3sA5klerzfVc4r": "{{33.value}}",
+                          "fldkx6oVanVYV0Eal": "{{first(map(10.parts; \"name\"; \"sku\"; 33.value))}}",
+                          "fldPckOkcylstxnse": "{{first(map(10.parts; \"category\"; \"sku\"; 33.value))}}",
+                          "fldO5jOeABrcZHyIi": "{{first(map(10.parts; \"supplierId\"; \"sku\"; 33.value))}}",
+                          "fldoc54lkWFqBnJbW": "{{first(map(10.parts; \"unitCost\"; \"sku\"; 33.value))}}",
+                          "fldG35nQILH0k0G04": "זמין"
+                        },
+                        "typecast": false,
+                        "useColumnId": false
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3900,
+                          "y": 300
+                        }
+                      },
+                      "onerror": [
+                        {
+                          "id": 112,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "recR3bSK4YzYAhDoC",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "failed"
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4200,
+                              "y": 450
+                            }
+                          }
+                        },
+                        {
+                          "id": 113,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "recNxn6uHmIcwx5z7",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "כתיבת פריטים ל-Airtable נכשלה. ייתכן עדכון חלקי."
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4500,
+                              "y": 450
+                            }
+                          }
+                        },
+                        {
+                          "id": 114,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "reci3muHrMjEe70aB",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4800,
+                              "y": 450
+                            }
+                          }
+                        },
+                        {
+                          "id": 115,
+                          "module": "builtin:Commit",
+                          "version": 1,
+                          "parameters": {},
+                          "mapper": null,
+                          "metadata": {
+                            "designer": {
+                              "x": 5100,
+                              "y": 450
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "flow": [
+                    {
+                      "id": 35,
+                      "module": "builtin:BasicFeeder",
+                      "version": 1,
+                      "parameters": {},
+                      "mapper": {
+                        "array": "{{split(1.existingItems; \";\")}}"
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3600,
+                          "y": 600
+                        }
+                      }
+                    },
+                    {
+                      "id": 36,
+                      "module": "airtable:upsertRecord",
+                      "version": 3,
+                      "parameters": {
+                        "__IMTCONN__": 13251249
+                      },
+                      "mapper": {
+                        "base": "appHZ3j17mjTXiMP6",
+                        "table": "tblsmKND0GhKkRims",
+                        "recordId": "{{last(split(35.value; \"=\"))}}",
+                        "record": {
+                          "fldG35nQILH0k0G04": "לא זמין"
+                        },
+                        "typecast": false,
+                        "useColumnId": false
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3900,
+                          "y": 600
+                        }
+                      },
+                      "filter": {
+                        "name": "הוסר מ-Digi-Key",
+                        "conditions": [
+                          [
+                            {
+                              "a": "{{35.value}}",
+                              "o": "exist"
+                            },
+                            {
+                              "a": "{{10.skus}}",
+                              "o": "array:notcontain",
+                              "b": "{{first(split(35.value; \"=\"))}}"
+                            }
+                          ]
+                        ]
+                      },
+                      "onerror": [
+                        {
+                          "id": 116,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "recR3bSK4YzYAhDoC",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "failed"
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4200,
+                              "y": 750
+                            }
+                          }
+                        },
+                        {
+                          "id": 117,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "recNxn6uHmIcwx5z7",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "סימון פריטים \"לא זמין\" ב-Airtable נכשל. ייתכן עדכון חלקי."
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4500,
+                              "y": 750
+                            }
+                          }
+                        },
+                        {
+                          "id": 118,
+                          "module": "airtable:upsertRecord",
+                          "version": 3,
+                          "parameters": {
+                            "__IMTCONN__": 13251249
+                          },
+                          "mapper": {
+                            "base": "appHZ3j17mjTXiMP6",
+                            "table": "tblGmahWYWceghxkR",
+                            "recordId": "reci3muHrMjEe70aB",
+                            "record": {
+                              "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+                            },
+                            "typecast": false,
+                            "useColumnId": false
+                          },
+                          "metadata": {
+                            "designer": {
+                              "x": 4800,
+                              "y": 750
+                            }
+                          }
+                        },
+                        {
+                          "id": 119,
+                          "module": "builtin:Commit",
+                          "version": 1,
+                          "parameters": {},
+                          "mapper": null,
+                          "metadata": {
+                            "designer": {
+                              "x": 5100,
+                              "y": 750
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "flow": [
+                    {
+                      "id": 37,
+                      "module": "airtable:upsertRecord",
+                      "version": 3,
+                      "parameters": {
+                        "__IMTCONN__": 13251249
+                      },
+                      "mapper": {
+                        "base": "appHZ3j17mjTXiMP6",
+                        "table": "tblGmahWYWceghxkR",
+                        "recordId": "rec8hUTK0LNJdTcNV",
+                        "record": {
+                          "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+                        },
+                        "typecast": false,
+                        "useColumnId": false
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3300,
+                          "y": 900
+                        }
+                      }
+                    },
+                    {
+                      "id": 38,
+                      "module": "airtable:upsertRecord",
+                      "version": 3,
+                      "parameters": {
+                        "__IMTCONN__": 13251249
+                      },
+                      "mapper": {
+                        "base": "appHZ3j17mjTXiMP6",
+                        "table": "tblGmahWYWceghxkR",
+                        "recordId": "recR3bSK4YzYAhDoC",
+                        "record": {
+                          "fldKN6W4BlP6dUiJn": "ok"
+                        },
+                        "typecast": false,
+                        "useColumnId": false
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3600,
+                          "y": 900
+                        }
+                      }
+                    },
+                    {
+                      "id": 39,
+                      "module": "airtable:upsertRecord",
+                      "version": 3,
+                      "parameters": {
+                        "__IMTCONN__": 13251249
+                      },
+                      "mapper": {
+                        "base": "appHZ3j17mjTXiMP6",
+                        "table": "tblGmahWYWceghxkR",
+                        "recordId": "recNxn6uHmIcwx5z7",
+                        "record": {
+                          "fldKN6W4BlP6dUiJn": ""
+                        },
+                        "typecast": false,
+                        "useColumnId": false
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 3900,
+                          "y": 900
+                        }
+                      }
+                    },
+                    {
+                      "id": 40,
+                      "module": "airtable:upsertRecord",
+                      "version": 3,
+                      "parameters": {
+                        "__IMTCONN__": 13251249
+                      },
+                      "mapper": {
+                        "base": "appHZ3j17mjTXiMP6",
+                        "table": "tblGmahWYWceghxkR",
+                        "recordId": "reci3muHrMjEe70aB",
+                        "record": {
+                          "fldKN6W4BlP6dUiJn": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ss.SSS[Z]\"; \"UTC\")}}"
+                        },
+                        "typecast": false,
+                        "useColumnId": false
+                      },
+                      "metadata": {
+                        "designer": {
+                          "x": 4200,
+                          "y": 900
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}

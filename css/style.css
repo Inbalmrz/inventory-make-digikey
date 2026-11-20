@@ -164,6 +164,11 @@ dialog::backdrop { background: rgba(15, 25, 40, .5); }
 }
 
 .loading { padding: 40px 0; text-align: center; color: var(--muted, #5b6675); }
+#sync-failed { width: min(520px, calc(100vw - 32px)); }
+#sync-failed h2 { margin: 0 0 8px; color: var(--bad); font-size: 18px; }
+.sync-failed-facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 12px 0 16px; padding: 12px 14px; border-radius: 8px; background: var(--bad-bg); }
+.sync-failed-facts dt { color: var(--muted); }
+.sync-failed-facts dd { margin: 0; overflow-wrap: anywhere; }
 .load-error { max-width: 640px; margin: 24px 0; padding: 16px 18px; border: 1px solid #e3b4b4; border-radius: 10px; background: #fdf1f1; color: #7a1f1f; }
 #connect { width: min(460px, calc(100vw - 32px)); }
 #connect label { display: block; margin: 12px 0 6px; font-weight: 600; }

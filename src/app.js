@@ -155,6 +155,20 @@
     }
   }
 
+  // The nightly sync (Make) writes loadStatus=failed when it could not refresh the data. Nothing is
+  // written to the data tables on failure, so the dashboard still shows the last good data, behind this notice.
+  function showSyncFailure(meta) {
+    const when = (iso) => (iso ? new Date(iso).toLocaleString('he-IL') : 'לא ידוע');
+    el('sync-failed-body').innerHTML = `
+      <p>העדכון האוטומטי מ-Digi-Key נכשל, ולכן הנתונים לא רועננו.</p>
+      <dl class="sync-failed-facts">
+        <dt>ניסיון העדכון</dt><dd>${esc(when(meta.lastAttempt))}</dd>
+        <dt>סיבת הכישלון</dt><dd dir="auto">${esc(meta.loadError || 'לא נמסרה סיבה')}</dd>
+        <dt>הנתונים המוצגים</dt><dd>מהעדכון התקין האחרון, ${esc(when(meta.lastUpdated))}</dd>
+      </dl>`;
+    el('sync-failed').showModal();
+  }
+
   function init() {
     el('view').innerHTML = '<p class="loading">טוען נתונים…</p>';
     loadData().then((data) => {
@@ -164,6 +178,7 @@
       el('drill').addEventListener('click', (e) => { if (e.target === el('drill')) closeDrill(); });
       window.addEventListener('hashchange', () => { closeDrill(); render(); });
       render();
+      if (data.meta.loadStatus === 'failed') showSyncFailure(data.meta);
     }).catch((e) => showError(e.message));
   }
 

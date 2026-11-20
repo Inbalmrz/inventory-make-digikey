@@ -2,7 +2,8 @@
 // Same contract as the demo source: load() -> Promise<Dataset>.
 //
 // Tables (names are fixed, see tools/seed-airtable.js): warehouses, suppliers, items, stock,
-// movements, purchaseOrders, meta (key/value rows: asOf, historyStart, lastUpdated, label, seed, isDemo).
+// movements, purchaseOrders, meta (key/value rows: asOf, historyStart, lastUpdated, label, seed, isDemo,
+// and from the nightly Make sync: loadStatus ok/failed, loadError, lastAttempt).
 (function (App) {
   const API = 'https://api.airtable.com/v0';
   const PAGE_DELAY_MS = 230; // Airtable allows 5 requests per second per base
@@ -61,8 +62,13 @@
         for (const r of t.meta) m[r.key] = r.value;
         if (!m.asOf || !m.historyStart) throw new Error('טבלת meta חסרה או ריקה. יש להריץ את tools/seed-airtable.js');
 
+        // status is written by the nightly Make sync: 'לא זמין' means Digi-Key no longer returns the part.
+        // The item stays in the base (its stock history is kept) and is labelled in its name.
         const items = t.items.map((r) => ({
-          sku: r.sku, name: r.name, category: r.category, supplierId: r.supplierId, unitCost: num(r.unitCost),
+          sku: r.sku,
+          name: r.status === 'לא זמין' ? `${r.name} (לא זמין ב-Digi-Key)` : r.name,
+          category: r.category, supplierId: r.supplierId, unitCost: num(r.unitCost),
+          available: r.status !== 'לא זמין',
         })).sort(byText('sku'));
 
         return {
@@ -75,6 +81,10 @@
             asOf: m.asOf,
             historyStart: m.historyStart,
             lastUpdated: m.lastUpdated || new Date().toISOString(),
+            // Written by the nightly Make sync. lastUpdated moves only on success; lastAttempt on every run.
+            loadStatus: m.loadStatus || 'ok',
+            loadError: m.loadError || '',
+            lastAttempt: m.lastAttempt || '',
           },
           warehouses: t.warehouses.map((r) => ({ id: r.id, name: r.name, city: r.city, capacityUnits: num(r.capacityUnits) })).sort(byText('id')),
           categories: [...new Set(items.map((i) => i.category))],

@@ -53,3 +53,6 @@ Airtable (base "מלאי ולוגיסטיקה") --REST API--> src/sources/airtab
 - `tools/seed-airtable.js` טעינת הנתונים ל-Airtable.
 - `src/metrics.js` חישובים, `src/forecast.js` תחזיות, `src/reconcile.js` בדיקות התאמה.
 - `src/ui/` גרפים, טבלאות וייצוא ל-Excel.
+
+## עדכון לילי מ-Digi-Key
+תרחיש Make מעדכן כל לילה ב-02:00 את `items` ו-`suppliers` ב-base של Digi-Key. אם העדכון נכשל, `digikey.html` מציג חלון קופץ עם הסיבה ומשאיר את הנתונים התקינים האחרונים. הוראות בנייה: [docs/make-digikey-sync.md](docs/make-digikey-sync.md).
