@@ -46,7 +46,9 @@ const QUERIES = ['resistor', 'capacitor', 'microcontroller', 'connector', 'tempe
 // ---- IML expressions (module 6 works on one Digi-Key product from iterator 5) ----
 const SKU = 'ifempty(first(map(5.ProductVariations; "DigiKeyProductNumber")); 5.DigiKeyProductNumber)';
 const PRICE = 'ifempty(5.UnitPrice; first(map(first(map(5.ProductVariations; "StandardPricing")); "UnitPrice")))';
-const SLUG = 'substring(replace(replace(replace(upper(ifempty(5.Manufacturer.Name; "Unknown")); /[^A-Z0-9]+/g; "-"); /^-+/; emptystring); /-+$/; emptystring); 0; 24)';
+// Make's IML has no regex literals, so the slug from seed-airtable.js (non [A-Z0-9] runs -> "-") is approximated
+// with plain replacements. It yields the same IDs for the manufacturers already in the base (e.g. "Lite-On Inc." -> LITE-ON-INC).
+const SLUG = 'substring(replace(replace(replace(replace(replace(replace(upper(trim(ifempty(5.Manufacturer.Name; "Unknown"))); space; "-"); "."; emptystring); ","; emptystring); "/"; "-"); "&"; "AND"); "--"; "-"); 0; 24)';
 const LEAD_WEEKS = 'parseNumber(5.ManufacturerLeadWeeks; ".")';
 // Record ID for a key in a lookup text, or empty (= create a new record).
 const lookup = (text, key) =>

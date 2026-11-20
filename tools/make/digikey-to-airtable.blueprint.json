@@ -381,7 +381,7 @@
           },
           {
             "name": "supplierId",
-            "value": "MFR-{{ifempty(substring(replace(replace(replace(upper(ifempty(5.Manufacturer.Name; \"Unknown\")); /[^A-Z0-9]+/g; \"-\"); /^-+/; emptystring); /-+$/; emptystring); 0; 24); \"UNKNOWN\")}}"
+            "value": "MFR-{{ifempty(substring(replace(replace(replace(replace(replace(replace(upper(trim(ifempty(5.Manufacturer.Name; \"Unknown\"))); space; \"-\"); \".\"; emptystring); \",\"; emptystring); \"/\"; \"-\"); \"&\"; \"AND\"); \"--\"; \"-\"); 0; 24); \"UNKNOWN\")}}"
           },
           {
             "name": "leadDays",
@@ -393,7 +393,7 @@
           },
           {
             "name": "supKey",
-            "value": ";MFR-{{ifempty(substring(replace(replace(replace(upper(ifempty(5.Manufacturer.Name; \"Unknown\")); /[^A-Z0-9]+/g; \"-\"); /^-+/; emptystring); /-+$/; emptystring); 0; 24); \"UNKNOWN\")}}="
+            "value": ";MFR-{{ifempty(substring(replace(replace(replace(replace(replace(replace(upper(trim(ifempty(5.Manufacturer.Name; \"Unknown\"))); space; \"-\"); \".\"; emptystring); \",\"; emptystring); \"/\"; \"-\"); \"&\"; \"AND\"); \"--\"; \"-\"); 0; 24); \"UNKNOWN\")}}="
           }
         ]
       },
