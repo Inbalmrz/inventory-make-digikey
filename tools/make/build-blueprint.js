@@ -50,9 +50,10 @@ const PRICE = 'ifempty(5.UnitPrice; first(map(first(map(5.ProductVariations; "St
 // with plain replacements. It yields the same IDs for the manufacturers already in the base (e.g. "Lite-On Inc." -> LITE-ON-INC).
 const SLUG = 'substring(replace(replace(replace(replace(replace(replace(upper(trim(ifempty(5.Manufacturer.Name; "Unknown"))); space; "-"); "."; emptystring); ","; emptystring); "/"; "-"); "&"; "AND"); "--"; "-"); 0; 24)';
 const LEAD_WEEKS = 'parseNumber(5.ManufacturerLeadWeeks; ".")';
-// Record ID for a key in a lookup text, or empty (= create a new record).
+// Record ID for a key in a lookup text. For a new record it must be omitted (`ignore`), not an empty string:
+// Airtable rejects an empty record ID with 422.
 const lookup = (text, key) =>
-  `{{if(contains(${text}; ${key}); substring(${text}; indexOf(${text}; ${key}) + length(${key}); indexOf(${text}; ${key}) + length(${key}) + 17); emptystring)}}`;
+  `{{if(contains(${text}; ${key}); substring(${text}; indexOf(${text}; ${key}) + length(${key}); indexOf(${text}; ${key}) + length(${key}) + 17); ignore)}}`;
 const NOW = '{{formatDate(now; "YYYY-MM-DDTHH:mm:ss.SSS[Z]"; "UTC")}}';
 
 // ---- module builders ----

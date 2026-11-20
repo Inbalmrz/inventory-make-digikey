@@ -633,7 +633,7 @@
                       "mapper": {
                         "base": "appHZ3j17mjTXiMP6",
                         "table": "tblS1CxeV6YLxu593",
-                        "recordId": "{{if(contains(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))); substring(1.existingSuppliers; indexOf(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + length(first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))); indexOf(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + length(first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + 17); emptystring)}}",
+                        "recordId": "{{if(contains(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))); substring(1.existingSuppliers; indexOf(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + length(first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))); indexOf(1.existingSuppliers; first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + length(first(map(10.parts; \"supKey\"; \"supplierId\"; 31.value))) + 17); ignore)}}",
                         "record": {
                           "fldSjUsOiffy4CjTz": "{{31.value}}",
                           "fld9cmjzEsEWAb5TU": "{{first(map(10.parts; \"mfr\"; \"supplierId\"; 31.value))}}",
@@ -765,7 +765,7 @@
                       "mapper": {
                         "base": "appHZ3j17mjTXiMP6",
                         "table": "tblsmKND0GhKkRims",
-                        "recordId": "{{if(contains(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))); substring(1.existingItems; indexOf(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + length(first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))); indexOf(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + length(first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + 17); emptystring)}}",
+                        "recordId": "{{if(contains(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))); substring(1.existingItems; indexOf(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + length(first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))); indexOf(1.existingItems; first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + length(first(map(10.parts; \"skuKey\"; \"sku\"; 33.value))) + 17); ignore)}}",
                         "record": {
                           "fld3sA5klerzfVc4r": "{{33.value}}",
                           "fldkx6oVanVYV0Eal": "{{first(map(10.parts; \"name\"; \"sku\"; 33.value))}}",
